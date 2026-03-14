@@ -104,7 +104,7 @@ const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => {
   return (
     <div 
       ref={overlayRef}
-      className="fixed inset-0 z-[100] bg-[#0a0a0a] flex flex-col pointer-events-auto"
+      className="fixed inset-0 z-[100] bg-background flex flex-col pointer-events-auto transition-colors duration-300"
       style={{ clipPath: 'circle(0% at 100% 0%)' }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-40" />

@@ -31,7 +31,7 @@ export default function App() {
   }, []);
 
   return (
-    <main className="relative min-h-screen w-full bg-[#0a0a0a] text-white selection:bg-white selection:text-black">
+    <main className="relative min-h-screen w-full bg-background text-white selection:bg-white selection:text-black">
       <NavigationBar />
       <div className="max-w-6xl mx-auto px-6 pt-32 pb-20 space-y-32">
         <HeroSection />

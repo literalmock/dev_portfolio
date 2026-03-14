@@ -1,15 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 @import "tailwindcss";
 
+:root {
+  color-scheme: dark; /* Default to dark as requested/built initially */
+}
+:root.light {
+  color-scheme: light;
+}
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-white: light-dark(#111827, #ffffff);
+  --color-black: light-dark(#f8f9fa, #000000);
+  --color-background: light-dark(#fafafa, #0a0a0a);
 }
 
 @layer base {
   body {
-    @apply bg-black text-white font-sans antialiased;
+    @apply bg-background text-white font-sans antialiased transition-colors duration-300;
   }
 }
+
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
