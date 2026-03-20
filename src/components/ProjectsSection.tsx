@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExternalLink, Github, Terminal, Server, Database, Cpu } from 'lucide-react';
+import { ExternalLink, Github, Key, Server, Database, Cpu } from 'lucide-react';
 
 const projects = [
   {
@@ -27,12 +27,13 @@ const projects = [
     github: "https://github.com/literalmock/auth-service"
   },
   {
-    title: "Automated Deployment Pipeline",
-    category: "DevOps",
-    description: "A custom CI/CD pipeline script for automated testing and deployment of containerized applications to Linux environments.",
-    icon: <Terminal className="w-6 h-6" />,
-    tags: ["Bash", "Docker", "GitHub Actions"],
-    github: "https://github.com/literalmock/deploy-scripts"
+    title: "Password Generator",
+    category: "Frontend / ReactJS",
+    description: "A clean and responsive password generator app with configurable length and character options for secure password creation.",
+    icon: <Key className="w-6 h-6" />,
+    tags: ["React", "Javascript", "Vite", "CSS"],
+    github: "https://github.com/literalmock/Password-Generator",
+    live: "https://password-generator-eke.pages.dev"
   }
 ];
 
@@ -58,9 +59,11 @@ const ProjectsSection: React.FC = () => {
                 <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors">
                   <Github className="w-5 h-5" />
                 </a>
-                <a href="#" className="text-white/30 hover:text-white transition-colors">
-                  <ExternalLink className="w-5 h-5" />
-                </a>
+                {project.live && (
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors">
+                    <ExternalLink className="w-5 h-5" />
+                  </a>
+                )}
               </div>
             </div>
             

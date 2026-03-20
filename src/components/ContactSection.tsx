@@ -48,7 +48,7 @@ const ContactSection: React.FC = () => {
             <a href="https://github.com/literalmock" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors">
               <Github className="w-8 h-8" />
             </a>
-            <a href="#" className="text-white/40 hover:text-white transition-colors">
+            <a href="https://www.linkedin.com/in/shivam-gupta-code/" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors">
               <Linkedin className="w-8 h-8" />
             </a>
             <a href="#" className="text-white/40 hover:text-white transition-colors">

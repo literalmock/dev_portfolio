@@ -135,7 +135,7 @@ const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => {
           <a href="https://github.com/literalmock" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors">
             <Github className="w-6 h-6" />
           </a>
-          <a href="#" className="text-white/40 hover:text-white transition-colors">
+          <a href="https://www.linkedin.com/in/shivam-gupta-code/" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors">
             <Linkedin className="w-6 h-6" />
           </a>
           <a href="#" className="text-white/40 hover:text-white transition-colors">
