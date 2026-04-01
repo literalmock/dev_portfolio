@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExternalLink, Github, Key, Server, Database, Cpu } from 'lucide-react';
+import { ExternalLink, Github, Key, Server, Database, Video } from 'lucide-react';
 
 const projects = [
   {
@@ -11,12 +11,12 @@ const projects = [
     github: "https://github.com/literalmock/DevMate"
   },
   {
-    title: "Linux System Monitor",
-    category: "Infrastructure",
-    description: "A real-time system monitoring tool for Linux servers, providing insights into CPU, memory, and network usage via a clean dashboard.",
-    icon: <Cpu className="w-6 h-6" />,
-    tags: ["Python", "Bash", "Docker", "Prometheus"],
-    github: "https://github.com/literalmock/linux-monitor"
+    title: "Clip Captions",
+    category: "AI SaaS Platform",
+    description: "An AI video generation platform that automatically transcribes and styles viral captions for Reels and Shorts with precise word-level sync and real-time editing.",
+    icon: <Video className="w-6 h-6" />,
+    tags: ["React.js", "Node.js", "Redis", "BullMQ", "FFmpeg"],
+    live: "https://landing.clipcaptions.video/"
   },
   {
     title: "Scalable Auth Service",
@@ -56,9 +56,11 @@ const ProjectsSection: React.FC = () => {
                 {project.icon}
               </div>
               <div className="flex gap-4">
-                <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors">
-                  <Github className="w-5 h-5" />
-                </a>
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors">
+                    <Github className="w-5 h-5" />
+                  </a>
+                )}
                 {project.live && (
                   <a href={project.live} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors">
                     <ExternalLink className="w-5 h-5" />
