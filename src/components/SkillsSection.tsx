@@ -1,47 +1,20 @@
-import React from 'react';
-
-const skillGroups = [
-  {
-    category: "Languages",
-    skills: ["JavaScript", "Python", "Bash", "C"]
-  },
-  {
-    category: "Backend & Database",
-    skills: ["Node.js", "Express.js", "MongoDB", "REST APIs", "Zod", "JWT"]
-  },
-  {
-    category: "DevOps & Tools",
-    skills: ["Linux (Debian/Arch)", "Docker", "Git", "VS Code", "Vim"]
-  }
+const groups = [
+  ['Languages', 'JavaScript, TypeScript, Python, Bash, C'],
+  ['Backend & data', 'Node.js, Bun, Express, MongoDB, PostgreSQL, Prisma, Redis, REST, Zod, JWT'],
+  ['Frontend', 'React, Next.js'],
+  ['Systems & tools', 'Linux, Docker, Git, BullMQ, FFmpeg, Vim'],
 ];
 
-const SkillsSection: React.FC = () => {
+export default function SkillsSection() {
   return (
-    <section id="skills" className="scroll-mt-32">
-      <div className="flex items-center gap-4 mb-12">
-        <h2 className="text-3xl font-bold">Tech Stack</h2>
-        <div className="h-px flex-1 bg-white/10"></div>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-        {skillGroups.map((group, index) => (
-          <div key={index} className="space-y-6">
-            <h3 className="text-sm font-bold uppercase tracking-widest text-white/40">{group.category}</h3>
-            <div className="flex flex-wrap gap-3">
-              {group.skills.map(skill => (
-                <div 
-                  key={skill} 
-                  className="px-4 py-2 rounded-xl bg-white/[0.03] border border-white/5 text-white/80 hover:text-white hover:border-white/20 transition-all"
-                >
-                  {skill}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+    <section id="skills" className="pb-24" data-reveal>
+      <p className="mono mb-4 text-[var(--dim)]">Toolkit</p>
+      {groups.map(([k, v]) => (
+        <div key={k} className="grid gap-1 border-t border-[var(--line)] py-4 sm:grid-cols-[150px_1fr] sm:gap-6">
+          <span className="text-[var(--muted)]">{k}</span>
+          <span>{v}</span>
+        </div>
+      ))}
     </section>
   );
-};
-
-export default SkillsSection;
+}

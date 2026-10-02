@@ -1,109 +1,50 @@
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
+import { useEffect, useState } from 'react';
+import { Scramble, Magnetic } from './Effects';
 
-const HeroSection: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopIndex, setLoopIndex] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(150);
-
-  const phrases = [
-    "I'm Shivam",
-    "I'm Backend Developer",
-    "I'm Full Stack Developer"
-  ];
-
+function Clock() {
+  const [t, setT] = useState('');
   useEffect(() => {
-    const handleTyping = () => {
-      const currentPhrase = phrases[loopIndex % phrases.length];
-      const updatedText = isDeleting 
-        ? currentPhrase.substring(0, displayText.length - 1)
-        : currentPhrase.substring(0, displayText.length + 1);
-
-      setDisplayText(updatedText);
-
-      if (!isDeleting && updatedText === currentPhrase) {
-        // Pause at the end of typing
-        setTypingSpeed(2000);
-        setIsDeleting(true);
-      } else if (isDeleting && updatedText === "I'm ") {
-        setIsDeleting(false);
-        setLoopIndex(loopIndex + 1);
-        setTypingSpeed(500);
-      } else {
-        setTypingSpeed(isDeleting ? 50 : 100);
-      }
-    };
-
-    const timer = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(timer);
-  }, [displayText, isDeleting, loopIndex, typingSpeed]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-      // Initial state for other elements
-      gsap.set(".reveal-stagger", { opacity: 0, y: 20 });
-
-      tl.to(".reveal-stagger", {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.1,
-      });
-
-      // Continuous subtle floating for the status pill
-      gsap.to(".status-pill", {
-        y: -4,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-    }, containerRef);
-    return () => ctx.revert();
+    const f = () => setT(new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    f(); const i = setInterval(f, 1000); return () => clearInterval(i);
   }, []);
+  return <span className="tabular-nums">{t} IST</span>;
+}
 
+const work = [
+  ['Axipays', 'SDE Intern', 'Mar — Jun 2026'],
+  ['Clip Captions', 'AI captions SaaS · queues & media pipeline', '2025'],
+  ['Freelance', 'Backend & full-stack developer', '2024'],
+];
+
+export default function HeroSection() {
   return (
-    <section id="hero" ref={containerRef} className="flex flex-col items-start min-h-[85vh] justify-center py-20">
-      <div className="status-pill inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-12 reveal-stagger">
-        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-        <span className="text-xs font-medium text-white/60 uppercase tracking-widest">Available for projects</span>
+    <section id="top" className="pt-32 pb-20 md:pt-44">
+      <div className="mono mb-10 flex items-center justify-between text-[var(--muted)]" data-reveal>
+        <span className="flex items-center gap-2.5"><i className="status-dot" /> Available for work</span>
+        <Clock />
       </div>
-      
-      <div className="mb-12 h-[120px] md:h-[180px] lg:h-[220px] flex items-center">
-        <h1 className="text-5xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none">
-          <span className="bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent">
-            {displayText}
-          </span>
-          <span className="inline-block w-[4px] h-[0.8em] bg-white ml-2 animate-pulse align-middle"></span>
-        </h1>
-      </div>
-      
-      <p className="text-xl md:text-2xl text-white/40 max-w-2xl leading-relaxed reveal-stagger mb-12">
-        Building high-performance backend architectures and seamless 
-        full-stack experiences. Focused on scalability, security, and 
-        elegant code.
+      <h1 className="text-[clamp(2.6rem,9vw,4.5rem)] font-light leading-[1] tracking-[-.045em]" data-reveal>
+        <Scramble text="Shivam Gupta" />
+      </h1>
+      <p className="mt-3 text-[clamp(1.1rem,3.6vw,1.5rem)] tracking-tight text-[var(--muted)]" data-reveal>Backend engineer.</p>
+      <p className="mt-8 max-w-[520px] text-[var(--muted)]" data-reveal>
+        Deeply into tech and happiest when I'm tinkering with things — taking them apart to see how they work. I'm focused on building: reliable APIs, scalable systems and products that ship, while getting a little better than I was yesterday.
       </p>
-      
-      <div className="flex flex-wrap gap-6 reveal-stagger">
-        <a 
-          href="#projects" 
-          className="group relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden transition-all hover:bg-white/90 active:scale-95"
-        >
-          <span className="relative z-10">Explore Projects</span>
-        </a>
-        <a 
-          href="#contact" 
-          className="px-8 py-4 bg-transparent text-white font-bold rounded-full border border-white/20 hover:bg-white/5 transition-all hover:border-white/40"
-        >
-          Get in touch
-        </a>
+      <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm" data-reveal>
+        <Magnetic><a className="ulink" href="mailto:sg946511@gmail.com">Email</a></Magnetic>
+        <Magnetic><a className="ulink" href="https://github.com/literalmock" target="_blank" rel="noreferrer">GitHub</a></Magnetic>
+        <Magnetic><a className="ulink" href="https://www.linkedin.com/in/shivam-gupta-code/" target="_blank" rel="noreferrer">LinkedIn</a></Magnetic>
+      </div>
+
+      <div id="about" className="mt-24 scroll-mt-24" data-reveal>
+        <p className="mono mb-4 text-[var(--dim)]">Experience</p>
+        {work.map(([a, b, c]) => (
+          <div key={a} className="flex items-baseline justify-between gap-4 py-2">
+            <span><span className="font-medium">{a}</span> <span className="text-[var(--muted)]">— {b}</span></span>
+            <span className="mono shrink-0 text-[var(--dim)]">{c}</span>
+          </div>
+        ))}
       </div>
     </section>
   );
-};
-
-export default HeroSection;
+}

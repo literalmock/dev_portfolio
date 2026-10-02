@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { AnimatePresence } from 'motion/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import NavigationBar from './components/NavigationBar';
 import HeroSection from './components/HeroSection';
 import ProjectsSection from './components/ProjectsSection';
 import SkillsSection from './components/SkillsSection';
 import ContactSection from './components/ContactSection';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { AnimatePresence } from 'motion/react';
 import Preloader from './components/Preloader';
+import BlogSection from './components/BlogSection';
+import Dock from './components/Dock';
+import Effects from './components/Effects';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,49 +18,29 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (isLoading) {
-      document.body.style.overflow = 'hidden';
-      // Lock window at top
-      window.scrollTo(0, 0);
-      return;
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-
-    // Reveal animations for sections
-    const sections = ['hero', 'projects', 'skills', 'contact'];
-    sections.forEach(section => {
-      gsap.fromTo(`#${section}`, 
-        { y: 30, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 0.8, 
-          scrollTrigger: {
-            trigger: `#${section}`,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
+    document.body.style.overflow = isLoading ? 'hidden' : '';
+    if (isLoading || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
+        gsap.fromTo(element, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: .65, ease: 'power2.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } });
+      });
     });
+    return () => ctx.revert();
   }, [isLoading]);
 
   return (
-    <main className="relative min-h-screen w-full bg-background text-white selection:bg-white selection:text-black">
-      <AnimatePresence mode="wait">
-        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-      </AnimatePresence>
+    <>
+      <AnimatePresence mode="wait">{isLoading && <Preloader onComplete={() => setIsLoading(false)} />}</AnimatePresence>
+      <Effects />
       <NavigationBar />
-      <div className="max-w-6xl mx-auto px-6 pt-32 pb-20 space-y-32">
+      <main className="relative z-10 mx-auto max-w-[680px] px-6 pb-28">
         <HeroSection />
         <ProjectsSection />
         <SkillsSection />
+        <BlogSection />
         <ContactSection />
-      </div>
-      
-      {/* Subtle background noise/texture */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-    </main>
+      </main>
+      <Dock />
+    </>
   );
 }

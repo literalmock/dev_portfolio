@@ -3,21 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shivam Gupta - Portfolio</title>
-    <script>
-      (function() {
-        var storedTheme = localStorage.getItem('theme');
-        if (storedTheme === 'light') {
-          document.documentElement.classList.add('light');
-        } else {
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
+    <meta name="theme-color" content="#fafaf8" />
+    <meta name="description" content="Shivam Gupta — backend developer building reliable APIs, scalable systems, and focused web products." />
+    <title>Shivam Gupta</title>
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.dataset.theme='dark'}catch(e){}</script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
