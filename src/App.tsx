@@ -18,7 +18,9 @@ import Seo from './components/Seo';
 gsap.registerPlugin(ScrollTrigger);
 
 const paths = ['/', '/projects', '/blogs', '/freelance'];
-const readPath = () => { const p = window.location.hash.replace(/^#/, '') || '/'; return paths.includes(p) ? p : '/'; };
+// Old "#/projects" links still work: rewrite them to "/projects" on load.
+if (location.hash.startsWith('#/')) history.replaceState(null, '', location.hash.slice(1));
+const readPath = () => { const p = location.pathname.replace(/\/+$/, '') || '/'; return paths.includes(p) ? p : '/'; };
 
 let freelanceSeen = false; // freelance animations only play on its first visit per page load
 
@@ -28,8 +30,18 @@ export default function App() {
 
   useEffect(() => {
     const on = () => { setPath(readPath()); window.scrollTo(0, 0); };
-    window.addEventListener('hashchange', on);
-    return () => window.removeEventListener('hashchange', on);
+    // Internal links (href="/projects") switch routes without a page reload.
+    const click = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement).closest('a');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (a.target || a.origin !== location.origin || !paths.includes(a.pathname)) return;
+      e.preventDefault();
+      if (a.pathname !== location.pathname) history.pushState(null, '', a.pathname);
+      on();
+    };
+    window.addEventListener('popstate', on);
+    document.addEventListener('click', click);
+    return () => { window.removeEventListener('popstate', on); document.removeEventListener('click', click); };
   }, []);
 
   useEffect(() => {
@@ -49,7 +61,7 @@ export default function App() {
   return (
     <>
       <AnimatePresence mode="wait">{isLoading && <Preloader onComplete={() => setIsLoading(false)} />}</AnimatePresence>
-      <Seo />
+      <Seo path={path} />
       <Effects />
       <NavigationBar path={path} />
       <main className="relative z-10 mx-auto max-w-[680px] px-6 pb-28">

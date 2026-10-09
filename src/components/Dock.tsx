@@ -19,7 +19,7 @@ export default function Dock({ path }: { path: string }) {
   return (
     <nav className="dock" aria-label="Primary">
       {routes.map(({ path: p, label, icon: Icon }) => (
-        <a key={p} href={'#' + p} aria-label={label} aria-current={path === p ? 'page' : undefined} data-label={label} className={'dock-item' + (path === p ? ' on' : '')}><Icon size={17} /></a>
+        <a key={p} href={p} aria-label={label} aria-current={path === p ? 'page' : undefined} data-label={label} className={'dock-item' + (path === p ? ' on' : '')}><Icon size={17} /></a>
       ))}
       <span className="dock-sep" />
       <button onClick={() => setDark(!dark)} aria-label="Toggle theme" data-label={dark ? 'Light' : 'Dark'} className="dock-item">{dark ? <Sun size={17} /> : <Moon size={17} />}</button>

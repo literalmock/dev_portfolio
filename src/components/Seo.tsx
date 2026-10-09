@@ -46,11 +46,11 @@ const projects = [
   },
 ];
 
-function canonicalUrl() {
+function canonicalUrl(path: string) {
   const url = new URL(window.location.href);
   url.hash = '';
   url.search = '';
-  url.pathname = url.pathname.replace(/index\.html$/, '');
+  url.pathname = path;
   return url.toString();
 }
 
@@ -85,9 +85,9 @@ function upsertJsonLd(id: string, data: unknown) {
   script.textContent = JSON.stringify(data);
 }
 
-export default function Seo() {
+export default function Seo({ path }: { path: string }) {
   useEffect(() => {
-    const url = canonicalUrl();
+    const url = canonicalUrl(path);
     const personId = `${url}#person`;
     const websiteId = `${url}#website`;
     const workId = `${url}#selected-work`;
@@ -172,7 +172,7 @@ export default function Seo() {
         },
       ],
     });
-  }, []);
+  }, [path]);
 
   return null;
 }
