@@ -8,14 +8,15 @@ const projects = [
 
 export default function ProjectsSection() {
   return (
-    <section id="work" className="scroll-mt-24 pb-24" data-reveal>
-      <p className="mono mb-4 text-[var(--dim)]">Selected work</p>
+    <section id="work" aria-labelledby="work-heading" className="pt-28 md:pt-36" data-reveal>
+      <h1 id="work-heading" className="h1">Projects</h1>
+      <p className="mt-3 mb-10 text-[var(--muted)]">Things I built, broke and fixed.</p>
       <div className="rows">
         {projects.map((p) => (
           <a key={p.title} href={p.href} target="_blank" rel="noreferrer" className="row group block py-6">
             <div className="flex items-start justify-between gap-4">
               <div className="name">
-                <h3 className="text-xl font-normal tracking-tight">{p.title}</h3>
+                <h3 className="h3 text-xl">{p.title}</h3>
                 <p className="mono mt-1 text-[var(--dim)]">{p.type}</p>
               </div>
               <ArrowUpRight size={18} className="arrow mt-1 shrink-0" />

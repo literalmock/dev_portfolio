@@ -1,6 +1,29 @@
 import { useEffect, useRef, useState, type MouseEvent as RMouseEvent, type ReactNode } from 'react';
 
 /** Custom cursor (dot + lagging ring), background spotlight, scroll progress bar. */
+const CLICK_VOLUME = 0.25;
+let audio: AudioContext | undefined;
+let clickBuf: AudioBuffer | undefined;
+
+/** Loads and decodes the click sample once, so playback is instant and clicks can overlap. */
+async function loadClick() {
+  try {
+    audio ??= new AudioContext();
+    const res = await fetch('/sounds/click.mp3');
+    clickBuf = await audio.decodeAudioData(await res.arrayBuffer());
+  } catch { /* audio unavailable */ }
+}
+
+function softClick() {
+  try {
+    if (!audio || !clickBuf) { void loadClick(); return; }
+    if (audio.state === 'suspended') void audio.resume();
+    const src = audio.createBufferSource(), g = audio.createGain();
+    src.buffer = clickBuf; g.gain.value = CLICK_VOLUME;
+    src.connect(g).connect(audio.destination); src.start();
+  } catch { /* audio unavailable */ }
+}
+
 export default function Effects() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
@@ -30,9 +53,13 @@ export default function Effects() {
       raf = requestAnimationFrame(tick);
     };
     tick();
+    // Click sample on interactive elements only (rows in the Past work list make their own sound).
+    const click = (e: MouseEvent) => { const t = (e.target as HTMLElement).closest('a,button,[role="button"],[data-hover]'); if (t && !t.closest('.work')) softClick(); };
+    void loadClick(); // preload so even the first click plays
+    addEventListener('click', click, true); // capture: runs before React re-renders and detaches the clicked icon
     addEventListener('mousemove', move);
     addEventListener('scroll', scroll, { passive: true });
-    return () => { cancelAnimationFrame(raf); removeEventListener('mousemove', move); removeEventListener('scroll', scroll); document.body.classList.remove('has-cursor'); };
+    return () => { cancelAnimationFrame(raf); removeEventListener('mousemove', move); removeEventListener('click', click, true); removeEventListener('scroll', scroll); document.body.classList.remove('has-cursor'); };
   }, []);
 
   return (
@@ -78,4 +105,44 @@ export function Magnetic({ children }: { children: ReactNode }) {
   };
   const leave = () => { if (ref.current) ref.current.style.transform = ''; };
   return <span ref={ref} onMouseMove={move} onMouseLeave={leave} className="inline-block transition-transform duration-200 ease-out">{children}</span>;
+}
+
+/** Big name: letters rise in one by one, then bend away from the cursor; a sheen sweeps across periodically. */
+let nameIntroPlayed = false; // survives route changes, so the intro only runs on first load
+
+export function NameFx({ text }: { text: string }) {
+  const wrap = useRef<HTMLSpanElement>(null);
+  const [skip] = useState(nameIntroPlayed);
+
+  useEffect(() => {
+    if (skip) return;
+    nameIntroPlayed = true;
+    const t = setTimeout(() => wrap.current?.querySelectorAll('.nl').forEach(l => l.classList.add('settled')), 900 + text.length * 50 + 900);
+    return () => clearTimeout(t);
+  }, [text, skip]);
+
+  const move = (e: RMouseEvent) => {
+    const el = wrap.current; if (!el) return;
+    el.querySelectorAll<HTMLElement>('.nl').forEach(l => {
+      const r = l.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      const d = Math.hypot(dx, dy), p = Math.max(0, 1 - d / 140);
+      l.style.setProperty('--p', p.toFixed(3));
+      l.style.setProperty('--ty', `${-p * 14}px`);
+      l.style.setProperty('--sc', `${1 + p * 0.22}`);
+    });
+  };
+  const leave = () => wrap.current?.querySelectorAll<HTMLElement>('.nl').forEach(l => {
+    l.style.setProperty('--p', '0'); l.style.setProperty('--ty', '0px'); l.style.setProperty('--sc', '1');
+  });
+
+  return (
+    <span ref={wrap} className="name-fx" aria-label={text} onMouseMove={move} onMouseLeave={leave} data-hover>
+      {text.split('').map((c, i) => (
+        <span key={i} className="nl-mask" aria-hidden="true">
+          <span className={skip ? 'nl settled' : 'nl'} style={skip ? undefined : { animationDelay: `${0.9 + i * 0.05}s` }}>{c === ' ' ? ' ' : c}</span>
+        </span>
+      ))}
+    </span>
+  );
 }

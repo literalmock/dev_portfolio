@@ -2,9 +2,9 @@ const drafts = ['How I think about rate limiting', 'Queues, retries & idempotenc
 
 export default function BlogSection() {
   return (
-    <section id="blog" className="scroll-mt-24 pb-24" data-reveal>
-      <div className="mb-4 flex items-center justify-between">
-        <p className="mono text-[var(--dim)]">Blog</p>
+    <section id="blog" aria-labelledby="blog-heading" className="pt-28 md:pt-36" data-reveal>
+      <div className="mb-8 flex items-center justify-between">
+        <h1 id="blog-heading" className="h1">Blogs</h1>
         <span className="soon mono"><i /> coming soon</span>
       </div>
       <div className="blog-box">

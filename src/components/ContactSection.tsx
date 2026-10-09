@@ -7,8 +7,8 @@ export default function ContactSection() {
   const copy = async () => { await navigator.clipboard.writeText(email); setCopied(true); setTimeout(() => setCopied(false), 1600); };
 
   return (
-    <section id="contact" className="scroll-mt-24 pt-4 pb-12" data-reveal>
-      <h2 className="text-[clamp(2.2rem,8vw,3.6rem)] font-light leading-[1.05] tracking-[-.045em]">
+    <section id="contact" aria-labelledby="contact-heading" className="mt-24" data-reveal>
+      <h2 id="contact-heading" className="text-[clamp(2.2rem,8vw,3.6rem)] font-bold leading-[1.05] tracking-[-.04em]">
         got a <span className="hl">problem?</span><br />
         let&apos;s <span className="grad">cook</span> 🔥
       </h2>

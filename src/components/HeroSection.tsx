@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Scramble, Magnetic } from './Effects';
+import { NameFx, Magnetic } from './Effects';
 
 function Clock() {
   const [t, setT] = useState('');
@@ -10,21 +10,15 @@ function Clock() {
   return <span className="tabular-nums">{t} IST</span>;
 }
 
-const work = [
-  ['Axipays', 'SDE Intern', 'Mar — Jun 2026'],
-  ['Clip Captions', 'AI captions SaaS · queues & media pipeline', '2025'],
-  ['Freelance', 'Backend & full-stack developer', '2024'],
-];
-
 export default function HeroSection() {
   return (
-    <section id="top" className="pt-32 pb-20 md:pt-44">
+    <section id="top" aria-labelledby="intro-title" className="pt-28 md:pt-40">
       <div className="mono mb-10 flex items-center justify-between text-[var(--muted)]" data-reveal>
         <span className="flex items-center gap-2.5"><i className="status-dot" /> Available for work</span>
         <Clock />
       </div>
-      <h1 className="text-[clamp(2.6rem,9vw,4.5rem)] font-light leading-[1] tracking-[-.045em]" data-reveal>
-        <Scramble text="Shivam Gupta" />
+      <h1 id="intro-title" className="name-font text-[clamp(2.6rem,9vw,4.5rem)] font-bold leading-[.95] tracking-[-.03em]" data-reveal>
+        <NameFx text="Shivam Gupta" />
       </h1>
       <p className="mt-3 text-[clamp(1.1rem,3.6vw,1.5rem)] tracking-tight text-[var(--muted)]" data-reveal>Backend engineer.</p>
       <p className="mt-8 max-w-[520px] text-[var(--muted)]" data-reveal>
@@ -36,15 +30,6 @@ export default function HeroSection() {
         <Magnetic><a className="ulink" href="https://www.linkedin.com/in/shivam-gupta-code/" target="_blank" rel="noreferrer">LinkedIn</a></Magnetic>
       </div>
 
-      <div id="about" className="mt-24 scroll-mt-24" data-reveal>
-        <p className="mono mb-4 text-[var(--dim)]">Experience</p>
-        {work.map(([a, b, c]) => (
-          <div key={a} className="flex items-baseline justify-between gap-4 py-2">
-            <span><span className="font-medium">{a}</span> <span className="text-[var(--muted)]">— {b}</span></span>
-            <span className="mono shrink-0 text-[var(--dim)]">{c}</span>
-          </div>
-        ))}
-      </div>
     </section>
   );
 }

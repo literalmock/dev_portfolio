@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
-import { BookOpen, Briefcase, Home, Mail, Moon, Sun, Wrench } from 'lucide-react';
+import { BookOpen, Briefcase, Home, Moon, Sun, Layers } from 'lucide-react';
 
-const items = [
-  { id: 'top', label: 'Home', icon: Home },
-  { id: 'work', label: 'Work', icon: Briefcase },
-  { id: 'skills', label: 'Toolkit', icon: Wrench },
-  { id: 'blog', label: 'Blog', icon: BookOpen },
-  { id: 'contact', label: 'Contact', icon: Mail },
+export const routes = [
+  { path: '/', label: 'Home', icon: Home },
+  { path: '/projects', label: 'Projects', icon: Layers },
+  { path: '/blogs', label: 'Blogs', icon: BookOpen },
+  { path: '/freelance', label: 'Freelance', icon: Briefcase },
 ];
 
-export default function Dock() {
-  const [active, setActive] = useState('top');
+export default function Dock({ path }: { path: string }) {
   const [dark, setDark] = useState(() => document.documentElement.dataset.theme === 'dark');
 
   useEffect(() => {
@@ -18,16 +16,10 @@ export default function Dock() {
     try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch { /* ignore */ }
   }, [dark]);
 
-  useEffect(() => {
-    const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)), { rootMargin: '-45% 0px -50% 0px' });
-    items.forEach((i) => { const el = document.getElementById(i.id); if (el) io.observe(el); });
-    return () => io.disconnect();
-  }, []);
-
   return (
-    <nav className="dock" aria-label="Quick navigation">
-      {items.map(({ id, label, icon: Icon }) => (
-        <a key={id} href={'#' + id} aria-label={label} data-label={label} className={'dock-item' + (active === id ? ' on' : '')}><Icon size={17} /></a>
+    <nav className="dock" aria-label="Primary">
+      {routes.map(({ path: p, label, icon: Icon }) => (
+        <a key={p} href={'#' + p} aria-label={label} aria-current={path === p ? 'page' : undefined} data-label={label} className={'dock-item' + (path === p ? ' on' : '')}><Icon size={17} /></a>
       ))}
       <span className="dock-sep" />
       <button onClick={() => setDark(!dark)} aria-label="Toggle theme" data-label={dark ? 'Light' : 'Dark'} className="dock-item">{dark ? <Sun size={17} /> : <Moon size={17} />}</button>
