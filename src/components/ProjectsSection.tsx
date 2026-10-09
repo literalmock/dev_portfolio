@@ -1,8 +1,10 @@
 import { ArrowUpRight } from 'lucide-react';
 
 const projects = [
-  { title: 'DevMate', type: 'Networking platform', description: 'Developer matching with skill-based discovery, REST APIs, JWT auth and schema validation.', tags: ['Node.js', 'Express', 'MongoDB', 'Zod'], href: 'https://github.com/literalmock/DevMate' },
   { title: 'Clip Captions', type: 'AI SaaS', description: 'Automatic transcription and styled captions for short-form video, with word-level sync.', tags: ['React', 'Redis', 'BullMQ', 'FFmpeg'], href: 'https://landing.clipcaptions.video/' },
+  { title: 'DevMate', type: 'Networking platform', description: 'Developer matching with skill-based discovery, REST APIs, JWT auth and schema validation.', tags: ['Node.js', 'Express', 'MongoDB', 'Zod'], href: 'https://github.com/literalmock/DevMate' },
+  { title: 'NexVenture', type: 'MERN platform', description: 'One place for founders, investors, mentors and students to connect, with a Node.js and Express API on MongoDB and a React client.', tags: ['MongoDB', 'Express', 'React', 'Node.js'], href: 'https://github.com/literalmock/NexVenture' },
+  { title: 'mifo', type: 'Terminal system monitor', description: 'Live macOS system monitor for the terminal: CPU, memory, disk, network, battery and thermals. Pure Go, no root, no cgo.', tags: ['Go', 'Bubble Tea', 'TUI', 'macOS'], href: 'https://github.com/literalmock/mifo' },
   { title: 'Password Generator', type: 'Frontend utility', description: 'Responsive tool with configurable length and character rules.', tags: ['React', 'Vite', 'CSS'], href: 'https://password-generator-eke.pages.dev' },
 ];
 

@@ -27,16 +27,28 @@ const skills = [
 
 const projects = [
   {
+    name: 'Clip Captions',
+    url: 'https://landing.clipcaptions.video/',
+    description: 'Automatic transcription and styled captions for short-form video with word-level sync.',
+    keywords: ['React', 'Redis', 'BullMQ', 'FFmpeg'],
+  },
+  {
     name: 'DevMate',
     url: 'https://github.com/literalmock/DevMate',
     description: 'Developer matching with skill-based discovery, REST APIs, JWT auth, and schema validation.',
     keywords: ['Node.js', 'Express', 'MongoDB', 'Zod'],
   },
   {
-    name: 'Clip Captions',
-    url: 'https://landing.clipcaptions.video/',
-    description: 'Automatic transcription and styled captions for short-form video with word-level sync.',
-    keywords: ['React', 'Redis', 'BullMQ', 'FFmpeg'],
+    name: 'NexVenture',
+    url: 'https://github.com/literalmock/NexVenture',
+    description: 'MERN platform connecting founders, investors, mentors and students.',
+    keywords: ['MongoDB', 'Express', 'React', 'Node.js'],
+  },
+  {
+    name: 'mifo',
+    url: 'https://github.com/literalmock/mifo',
+    description: 'Terminal system monitor for macOS covering CPU, memory, disk, network, battery and thermals. Written in Go.',
+    keywords: ['Go', 'Bubble Tea', 'TUI', 'macOS'],
   },
   {
     name: 'Password Generator',
