@@ -1,5 +1,5 @@
 const jobs = [
-  { group: 'Now', role: 'Backend & Full-stack Developer', org: '', tag: 'Freelance', period: '2024 — Present', note: 'Building APIs, dashboards and product backends for clients.' },
+  { group: 'Now', role: 'Backend & Full-stack Developer', org: '', tag: 'Freelance', period: '2026 — Present', note: 'Building APIs, dashboards and product backends for clients.' },
   { group: 'Previously', role: 'SDE Intern', org: 'Axipays', period: 'Mar — Jun 2026', note: 'Payments-side backend work: services, integrations and reliability.' },
   { group: 'Previously', role: 'Founder / Developer', org: 'Clip Captions', period: '2025', note: 'AI captions SaaS. Queues, retries and a media processing pipeline.' },
 ];
